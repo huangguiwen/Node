@@ -25,5 +25,4 @@ exports.showAlbum = (req, res, next) => {
             images: imagesArray
         })
     })
-    
 }
