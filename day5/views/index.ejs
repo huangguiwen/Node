@@ -35,19 +35,39 @@
             </div>
         </form>
     </div>
-    <script src="js/jquery-1.8.2.min"></script>
-    <script src="js/bootstrap.min"></script>
+
+    <ul class="list"></ul>
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script>
         $(function(){
+            $.ajax({
+                url: '/du',
+                type: 'get',
+                success: function(data){
+                    var html = '';
+                    data.result.forEach((value, index) => {
+                        console.log(value);
+                        if(value.liuyan) {
+                            html += `<li>${value.liuyan}</li>`;
+                        }
+                    });
+                    $('.list').append(html);
+                }
+            })
             $('#submit').click(function(){
                 $.post(
-                    'tijiao',
+                    '/tijiao',
                     { 
                         'username': $('#username').val(),
                         'liuyan': $('#liuyan').val()
                     }, 
                     function(data){
-                        
+                        if(data.result == 1){
+                            alert('提交成功！');
+                        } else if(data.result == -1){
+                            alert('提交失败！');
+                        }
                     }
                 )
             })
